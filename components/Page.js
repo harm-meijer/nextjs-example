@@ -10,15 +10,11 @@ export default function Page({ current }) {
     );
   }, []);
   return (
-    <select onChange={handleChange}>
+    <select onChange={handleChange} value={Number(current)}>
       {[...new Array(20)]
         .map((_, index) => index + 1)
         .map(index => (
-          <option
-            key={index}
-            value={index}
-            selected={index === Number(current)}
-          >
+          <option key={index} value={index}>
             {index}
           </option>
         ))}

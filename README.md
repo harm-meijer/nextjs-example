@@ -1,6 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
+Example applicaiton with posts and post to demonstrate router and api
+
 ## Getting Started
+
+Install dependencies:
+
+```bash
+yarn
+```
 
 First, run the development server:
 

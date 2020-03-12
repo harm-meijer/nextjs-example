@@ -1,26 +1,29 @@
 import React from "react";
-import Link from "next/link";
-import fetch from "isomorphic-fetch";
 import Layout from "../../components/Layout";
 
-class Post extends React.Component {
-  static getInitialProps({ query }) {
-    return fetch(
-      `${process.env.API_URL}/api/post?id=${query.id}`
-    )
-      .then(result => result.json())
-      .then(post => ({ post }));
-  }
+function Post(props) {
+  console.log("in render");
+  return (
+    <Layout title={"post title"}>
+      <pre>{JSON.stringify(props, undefined, 2)}</pre>
+      {/* this shows
+          {
+            "url": {
+              "query": {
+                "id": "8"
+              },
+              "pathname": "/post/[id]",
+              "asPath": "/post/8"
+            }
+          }      
+      */}
+    </Layout>
+  );
+}
 
-  render() {
-    return (
-      <Layout title={this.props.post.name}>
-        <pre>
-          {JSON.stringify(this.props.post, undefined, 2)}
-        </pre>
-      </Layout>
-    );
-  }
+export async function getServerSideProps(needQuery) {
+  console.log("never see this", needQuery);
+  return { props: { dosNot: "matter, never called" } };
 }
 
 export default Post;

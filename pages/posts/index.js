@@ -4,35 +4,31 @@ import fetch from "isomorphic-fetch";
 import Link from "next/link";
 import Page from "../../components/Page";
 
-class Posts extends React.Component {
-  static getInitialProps({ query }) {
-    const page = Number(query.page || 1);
-    return fetch(
-      `${process.env.API_URL}/api/posts?page=${page}`
-    )
-      .then(result => result.json())
-      .then(posts => ({ posts, page: page }));
-  }
-
-  render() {
-    return (
-      <Layout title={`posts page ${this.props.page}`}>
-        <Page current={this.props.page} />
-        <ul>
-          {this.props.posts.map(post => (
-            <li key={post.id}>
-              <Link
-                as={`/post/${post.id}`}
-                href={`/post?id=${post.id}`}
-              >
-                <a>{post.name}</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Layout>
-    );
-  }
-}
+const Posts = ({ page, posts }) => (
+  <Layout title={`posts page ${page}`}>
+    <Page current={page} />
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>
+          <Link
+            as={`/post/${post.id}`}
+            href={`/post?id=${post.id}`}
+          >
+            <a>{post.name}</a>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </Layout>
+);
 
 export default Posts;
+
+export async function getServerSideProps({ query }) {
+  const page = Number(query.page || 1);
+  return fetch(
+    `${process.env.API_URL}/api/posts?page=${page}`
+  )
+    .then(result => result.json())
+    .then(posts => ({ props: { posts, page: page } }));
+}

@@ -11,7 +11,7 @@ class Posts extends React.Component {
       `${process.env.API_URL}/api/posts?page=${page}`
     )
       .then(result => result.json())
-      .then(posts => ({ posts, page: query.page }));
+      .then(posts => ({ posts, page: page }));
   }
 
   render() {

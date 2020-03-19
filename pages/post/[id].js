@@ -1,2 +1,1 @@
-import Post from "./index";
-export default Post;
+export { default, getServerSideProps } from "./index";
